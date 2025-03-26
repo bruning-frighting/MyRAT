@@ -28,4 +28,3 @@ while ($true) {
 
     Start-Sleep -Seconds 10  # Tránh spam API Discord
 }
-sadsa

